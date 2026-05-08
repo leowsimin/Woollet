@@ -204,12 +204,12 @@ function TripForm({ initial, onSave, onCancel }) {
           placeholder="e.g. Iceland Trip"
           value={name}
           onChange={e => setName(e.target.value)}
-          style={{ width: '100%', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: '12px 14px', fontSize: 14, color: 'var(--text)', outline: 'none' }}
+          style={{ width: '100%', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: '10px 8px', fontSize: 12, color: 'var(--text)', outline: 'none', boxSizing: 'border-box' }}
         />
       </div>
 
       {/* Dates */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, minWidth: 0 }}>
         <div>
           <div style={{ fontSize: 11, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>
             Start date
@@ -350,7 +350,7 @@ export default function TripScreen({ active, prev, trips, onBack, onSave, onDele
         {showForm && <div style={{ width: 36 }} />}
       </div>
 
-      <div className="scrollable" style={{ padding: '16px 16px 28px' }}>
+      <div className="scrollable" style={{ padding: '16px 16px 28px', overflowX: 'hidden' }}>
         {showForm ? (
           <TripForm
             initial={editing}
