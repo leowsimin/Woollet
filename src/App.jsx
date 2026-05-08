@@ -257,6 +257,7 @@ function handleSave(tx) {
           transactions={transactions}
           archivedMonths={archivedMonths}
           settings={settings}
+          trips={trips}
           onBack={goHome}
           onTab={handleTab}
           onDelete={handleDeleteTransaction}

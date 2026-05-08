@@ -55,7 +55,7 @@ function ConfirmModal({ onConfirm, onCancel }) {
   )
 }
 
-export default function HistoryScreen({ active, prev, transactions, archivedMonths, settings, onBack, onTab, onDelete }) {
+export default function HistoryScreen({ active, prev, transactions, archivedMonths, settings, trips, onBack, onTab, onDelete }) {
   const [confirmDelete, setConfirmDelete] = useState(null)
   const cls    = active ? 'screen' : prev ? 'screen prev' : 'screen hidden'
   const today  = new Date()
@@ -103,7 +103,7 @@ export default function HistoryScreen({ active, prev, transactions, archivedMont
         <button className="back-btn" onClick={onBack}>←</button>
         <span style={{ fontSize: 18, fontWeight: 500 }}>History</span>
         <button
-          onClick={() => exportToExcel(transactions, settings)}
+          onClick={() => exportToExcel(transactions, settings, trips, archivedMonths)}
           style={{
             background: 'var(--accent)', color: '#fff',
             border: 'none', borderRadius: 10,
