@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
+
 import {
   SEED_TRANSACTIONS, loadSettings, saveSettings,
   loadTrips, saveTrips, loadLastMonth, saveLastMonth,
@@ -195,7 +197,30 @@ function handleSave(tx) {
 
   function handleDeleteTransaction(id) {
   setTransactions(prev => prev.filter(tx => tx.id !== id))
-  } 
+  }
+
+  // FOR SHORTCUTS
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  // Handle URL routing on first load
+  useEffect(() => {
+    if (location.pathname === '/log') {
+      setScreen('log')
+    } else if (location.pathname === '/plan') {
+      setScreen('plan')
+    } else if (location.pathname === '/history') {
+      setScreen('history')
+    }
+  }, [])
+
+  // Sync screen state with URL
+  useEffect(() => {
+    if (screen === 'home')    navigate('/',        { replace: true })
+    else if (screen === 'log')     navigate('/log',     { replace: true })
+    else if (screen === 'history') navigate('/history', { replace: true })
+    else if (screen === 'plan')    navigate('/plan',    { replace: true })
+  }, [screen])
 
   return (
     <div style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>

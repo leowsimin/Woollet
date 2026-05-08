@@ -236,8 +236,24 @@ function TripForm({ initial, onSave, onCancel }) {
 
       {/* Budget breakdown */}
       <div>
-        <div style={{ fontSize: 11, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>
-          Budget breakdown
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
+          <div style={{ fontSize: 11, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+            Budget breakdown
+          </div>
+          <button
+            onClick={() => setBudgets(Object.fromEntries(TAGS.map(t => [t.id, 0])))}
+            style={{
+              fontSize: 11, fontWeight: 600,
+              color: 'var(--red)',
+              background: 'rgba(192,57,43,0.08)',
+              border: '1px solid var(--red)',
+              borderRadius: 8,
+              padding: '5px 12px',
+              cursor: 'pointer',
+            }}
+            >
+            Reset
+          </button>
         </div>
         <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16, overflow: 'hidden' }}>
           {TAGS.map((tag, i) => (

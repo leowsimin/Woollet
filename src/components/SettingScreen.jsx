@@ -135,8 +135,24 @@ export default function SettingsScreen({ active, prev, settings, onBack, onSave 
 
         {/* Category budgets */}
         <div style={{ marginTop: 20 }}>
-          <div style={{ fontSize: 11, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 10 }}>
-            Category budgets
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+            <div style={{ fontSize: 11, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+              Category budgets
+            </div>
+            <button
+              onClick={() => setBudgets(Object.fromEntries(TAGS.map(t => [t.id, 0])))}
+              style={{
+                fontSize: 11, fontWeight: 600,
+                color: 'var(--red)',
+                background: 'rgba(192,57,43,0.08)',
+                border: '1px solid var(--red)',
+                borderRadius: 8,
+                padding: '5px 12px',
+                cursor: 'pointer',
+              }}
+              >
+              Reset
+            </button>
           </div>
           <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16, overflow: 'hidden' }}>
             {TAGS.map((tag, i) => (
