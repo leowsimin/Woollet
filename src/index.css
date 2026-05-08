@@ -55,7 +55,7 @@ input  { font-family: var(--font-sans); }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 52px 20px 0;
+  padding: 25px 20px 0;
   flex-shrink: 0;
 }
 .topbar h1 {
@@ -122,10 +122,11 @@ input  { font-family: var(--font-sans); }
   display: flex;
   border-top: 1px solid var(--border);
   background: var(--bg);
-  padding: 8px 12px 24px;
+  padding: 8px 12px 5px;
   gap: 6px;
   flex-shrink: 0;
 }
+
 .nav-btn {
   flex: 1;
   display: flex;
