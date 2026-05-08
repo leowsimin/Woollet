@@ -209,27 +209,18 @@ function TripForm({ initial, onSave, onCancel }) {
       </div>
 
       {/* Dates */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, minWidth: 0 }}>
-        <div>
-          <div style={{ fontSize: 11, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>
-            Start date
-          </div>
-          <input
-            type="date"
-            value={startDate}
-            onChange={e => setStart(e.target.value)}
-            style={{ width: '100%', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: '12px 14px', fontSize: 13, color: 'var(--text)', outline: 'none' }}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: '12px 14px' }}>
+          <span style={{ fontSize: 12, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Start</span>
+          <input type="date" value={startDate} onChange={e => setStart(e.target.value)}
+            style={{ background: 'transparent', border: 'none', fontSize: 13, color: 'var(--text)', outline: 'none' }}
           />
         </div>
-        <div>
-          <div style={{ fontSize: 11, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>
-            End date
-          </div>
-          <input
-            type="date"
-            value={endDate}
-            onChange={e => setEnd(e.target.value)}
-            style={{ width: '100%', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: '12px 14px', fontSize: 13, color: 'var(--text)', outline: 'none' }}
+
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 12, padding: '12px 14px' }}>
+          <span style={{ fontSize: 12, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>End</span>
+          <input type="date" value={endDate} onChange={e => setEnd(e.target.value)}
+            style={{ background: 'transparent', border: 'none', fontSize: 13, color: 'var(--text)', outline: 'none' }}
           />
         </div>
       </div>
