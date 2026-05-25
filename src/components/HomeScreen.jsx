@@ -40,7 +40,27 @@ export default function HomeScreen({ active, prev, transactions, settings, activ
         {/* Topbar */}
         <div className="topbar">
           <h1>Woollet</h1>
-          <div className="pill">{month} {year}</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            <div className="pill">{month} {year}</div>
+            <button
+              onClick={() => onLog(null)}
+              style={{
+                width: 34, height: 34,
+                borderRadius: '50%',
+                background: 'var(--accent)',
+                border: 'none',
+                color: '#fff',
+                fontSize: 22,
+                fontWeight: 300,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                cursor: 'pointer',
+                flexShrink: 0,
+                transition: 'background 0.15s, transform 0.1s',
+              }}
+            >
+              +
+            </button>
+          </div>
         </div>
 
         {/* Sheep companion */}
@@ -193,6 +213,15 @@ export default function HomeScreen({ active, prev, transactions, settings, activ
                 <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 3 }}>
                   S${spent.toFixed(2)} / S${budget}
                 </div>
+                <div style={{
+                  fontSize: 12, marginTop: 2, fontWeight: 500,
+                  color: budget - spent <= 0 ? 'var(--red)' : 'var(--green)',
+                }}>
+                  {budget - spent <= 0
+                    ? `S$${Math.abs(budget - spent).toFixed(2)} over`
+                    : `S$${(budget - spent).toFixed(2)} left`
+                  }
+                </div>
                 <div style={{ height: 3, background: 'var(--border)', borderRadius: 2, marginTop: 10 }}>
                   <div style={{
                     height: 3, borderRadius: 2,
@@ -222,35 +251,30 @@ export default function HomeScreen({ active, prev, transactions, settings, activ
       <div style={{ fontSize: 12, color: 'var(--muted)', lineHeight: 1.6 }}>
         Tap + Log transaction to record your first spend!
       </div>
-    </div>
-      ) : (
-        transactions.slice(0, 3).map(tx => {
-          const tag = TAGS.find(t => t.id === tx.tag)
-          return (
-            <div key={tx.id} className="tx-row">
-              <div className="tx-icon-wrap">
-                {tag?.icon && <img src={tag.icon} alt={tag?.name} width={22} height={22} />}
-              </div>
-              <div className="tx-info">
-                <div className="tx-name">{tx.note}</div>
-                <div className="tx-meta">
-                  {tag?.name} · {tx.date}
-                  {tx.isTripExpense && <span style={{ color: 'var(--accent)', marginLeft: 6 }}>✈️</span>}
-                </div>
-              </div>
-              <div className="tx-amount">−S${tx.amount.toFixed(2)}</div>
-            </div>
-          )
-        })
-      )}
-    </div>
-
-        {/* FAB */}
-        <div className="fab-wrap">
-          <button className="fab" onClick={() => onLog(null)}>+ Log transaction</button>
-        </div>
-
       </div>
+        ) : (
+          transactions.slice(0, 3).map(tx => {
+            const tag = TAGS.find(t => t.id === tx.tag)
+            return (
+              <div key={tx.id} className="tx-row">
+                <div className="tx-icon-wrap">
+                  {tag?.icon && <img src={tag.icon} alt={tag?.name} width={22} height={22} />}
+                </div>
+                <div className="tx-info">
+                  <div className="tx-name">{tx.note}</div>
+                  <div className="tx-meta">
+                    {tag?.name} · {tx.date}
+                    {tx.isTripExpense && <span style={{ color: 'var(--accent)', marginLeft: 6 }}>✈️</span>}
+                  </div>
+                </div>
+                <div className="tx-amount">−S${tx.amount.toFixed(2)}</div>
+              </div>
+            )
+          })
+        )}
+      </div>
+
     </div>
+  </div>
   )
 }

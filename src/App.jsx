@@ -6,6 +6,7 @@ import {
   loadTrips, saveTrips, loadLastMonth, saveLastMonth,
   loadArchivedMonths, saveArchivedMonths
 } from './data/constants'
+
 import HomeScreen      from './components/HomeScreen'
 import LogScreen       from './components/LogScreen'
 import SuccessScreen   from './components/SuccessScreen'
@@ -15,6 +16,7 @@ import SettingsScreen  from './components/SettingScreen'
 import TripScreen      from './components/TripScreen'
 import NavBar          from './components/NavBar'
 import MonthResetModal from './components/MonthResetModal'
+import CategoryScreen from './components/CategoryScreen'
 
 const STORAGE_KEY = 'kaching_transactions'
 
@@ -50,24 +52,13 @@ export default function App() {
   const [archivedMonths, setArchivedMonths] = useState(loadArchivedMonths)
   const [showResetModal, setShowResetModal] = useState(false)
   const [pendingMonthKey, setPendingMonthKey] = useState(null)
+  const [selectedCategory, setSelectedCategory] = useState(null)
 
   // Check for month change on load
-  useEffect(() => {
-    const currentKey  = getCurrentMonthKey()
-    const lastKey     = loadLastMonth()
-
-    if (!lastKey) {
-      // First time app is opened — just save current month
-      saveLastMonth(currentKey)
-      return
-    }
-
-    if (lastKey !== currentKey) {
-      // Month has changed — show reset modal
-      setPendingMonthKey(currentKey)
-      setShowResetModal(true)
-    }
-  }, [])
+useEffect(() => {
+  setPendingMonthKey(getCurrentMonthKey())
+  setShowResetModal(true)
+}, [])
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(transactions))
@@ -128,8 +119,13 @@ export default function App() {
   }
 
   function openLog(tagId) {
-    setPreTag(tagId)
-    nav('log')
+    if (tagId) {
+      setSelectedCategory(tagId)
+      nav('category')
+    } else {
+      setPreTag(null)
+      nav('log')
+    }
   }
 
 function handleSave(tx) {
@@ -287,6 +283,15 @@ function handleSave(tx) {
           onBack={() => nav('plan')}
           onSave={handleSaveTrip}
           onDelete={handleDeleteTrip}
+        />
+        <CategoryScreen
+          active={screen === 'category'}
+          prev={prevScreen === 'category'}
+          tag={selectedCategory}
+          transactions={transactions}
+          settings={settings}
+          onBack={goHome}
+          onLog={(tagId) => { setPreTag(tagId); nav('log') }}
         />
       </div>
 

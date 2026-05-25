@@ -38,6 +38,7 @@ export function loadSettings() {
     savingsGoal: DEFAULT_SAVINGS_GOAL,
     budgets:     DEFAULT_BUDGETS,
     bankSavings: 0,
+    salaryDate:  25,
   }
 }
 
