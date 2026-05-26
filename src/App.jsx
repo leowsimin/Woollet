@@ -55,10 +55,32 @@ export default function App() {
   const [selectedCategory, setSelectedCategory] = useState(null)
 
   // Check for month change on load
-useEffect(() => {
-  setPendingMonthKey(getCurrentMonthKey())
-  setShowResetModal(true)
-}, [])
+  useEffect(() => {
+    const currentKey     = getCurrentMonthKey()
+    const lastKey        = loadLastMonth()
+    const salaryDay      = settings.salaryDate || 25
+    const todayDate      = new Date().getDate()
+    const today          = new Date().toISOString().split('T')[0]
+    const scheduledReset = localStorage.getItem('kaching_reset_date')
+
+    if (!lastKey) {
+      saveLastMonth(currentKey)
+      return
+    }
+
+    // Check if scheduled reset date has arrived
+    if (scheduledReset && today >= scheduledReset) {
+      localStorage.removeItem('kaching_reset_date')
+      setPendingMonthKey(currentKey)
+      setShowResetModal(true)
+      return
+    }
+
+    if (lastKey !== currentKey && todayDate >= salaryDay) {
+      setPendingMonthKey(currentKey)
+      setShowResetModal(true)
+    }
+  }, [])
 
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(transactions))
@@ -105,13 +127,15 @@ useEffect(() => {
     setPendingMonthKey(null)
   }
 
-  function handleMonthDismiss() {
-    // User dismissed — don't reset, but save the new month key
-    // so we don't keep showing the modal
-    saveLastMonth(pendingMonthKey)
-    setShowResetModal(false)
-    setPendingMonthKey(null)
+  function handleMonthDismiss(scheduledDate) {
+  if (scheduledDate) {
+    // Save the scheduled reset date
+    localStorage.setItem('kaching_reset_date', scheduledDate)
   }
+  saveLastMonth(pendingMonthKey)
+  setShowResetModal(false)
+  setPendingMonthKey(null)
+  } 
 
   function nav(to) {
     setPrevScreen(screen)
